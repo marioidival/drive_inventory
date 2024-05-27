@@ -1,3 +1,5 @@
+import logging
+
 from dataclasses import asdict
 from datetime import datetime, timezone
 from drive_inventory.adapters.drive import AbstractDrive
@@ -8,6 +10,11 @@ from drive_inventory.adapters.repository import (
     FileAlreadySavedException,
 )
 from drive_inventory.domain.model import File, Log
+
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level="INFO"
+)
+logging = logging.getLogger(__name__)
 
 
 class DriveService:
@@ -23,6 +30,8 @@ class DriveService:
 
     def sync_files(self):
         next_page = None
+        logging.info("starting to sync files")
+        logging.info("fetching...")
         while True:
             for opts in self._process_files(next_page):
                 file, permissions, next_page_token = opts
@@ -48,7 +57,7 @@ class DriveService:
                                 break
 
             if next_page is None:
-                print("finished fetch files")
+                logging.info("finished fetch files")
                 break
 
     def make_file_private(self, file, permission_id):
@@ -86,7 +95,7 @@ class DriveService:
         items = results.get("files", [])
 
         if not items:
-            print("No files found.")
+            logging.info("No files found.")
             return
 
         for item in items:
