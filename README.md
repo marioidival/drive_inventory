@@ -70,3 +70,9 @@ To run the automated tests using `pytest`, run:
 ```sh
 poetry run pytest
 ```
+
+## References
+
+- [Cosmic Python](https://www.cosmicpython.com/)
+- [Drive API](https://developers.google.com/resources/api-libraries/documentation/drive/v3/python/latest/index.html)
+- [Gmail API](https://developers.google.com/resources/api-libraries/documentation/gmail/v1/python/latest/gmail_v1.users.messages.html#send)
